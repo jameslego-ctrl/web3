@@ -12,7 +12,7 @@ contract simpleStorage{
 
     string favorite_number = "eighty-eight";
 
-    address Myaddress = 0x3CA99294a4327B1A8BD6D9e986b54C8e030E6d50;
+    address Myaddress = 0x3CA99294a4327B1A8BD6D9e986b54C8e030E6d50;     //this addr is just a demo addr
 
     bytes32 favorite_bytes = "cat";
     // Largest byte is 32       bytes & bytes32 are not same they are different
