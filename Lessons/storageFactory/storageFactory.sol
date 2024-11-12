@@ -11,6 +11,7 @@ pragma solidity ^0.8.18;
 //          contract name           :   multiple contract can be imported
 
 
+//import SimpleStorage contract from simplestorage.sol
 contract SimpleStorage {
     uint256 myFavoriteNumber;
 
@@ -38,14 +39,43 @@ contract SimpleStorage {
 }
 
 
-
+// creating a new contract 
 contract StorageFactory{
+    // Declaration of simplestorage : it is declaring that simplestorage is a contract type as SimpleStorage
+
     SimpleStorage public simplestorage;
 
+    // making an array of contract
+
+    SimpleStorage[] public listofsmartcontract;
+//  contract def  visibility  name
+
     function createSimpleStorage() public {
-        simplestorage = new SimpleStorage();
+        simplestorage = new SimpleStorage();           
+        listofsmartcontract.push(simplestorage);
     }
-    // new keyword is used to make new contract 
+    // "new" keyword is used to make new contract 
     // here simplestorage is a new contract same as SimpleStorage created using the contract StorageFactory
 
-}
+
+    // using the function of "store" from SimpleStorage contract in the contract StorageFactory
+    function sfStore(uint256 _simplestorageindex,uint256 _newsimplestoragenumber) public {
+        SimpleStorage mysimplestorage = listofsmartcontract[_simplestorageindex];
+        mysimplestorage.store(_newsimplestoragenumber);
+    }
+
+
+    // using the function "retrieve" from SimpleStorage
+    function sfget(uint256 _simplestorageindex) public view returns(uint256){
+        SimpleStorage mysimplestorage = listofsmartcontract[_simplestorageindex];
+        return mysimplestorage.retrieve();
+    }
+
+
+    // alternative to use retrieve func.
+
+//     function sfget2(uint256 _simplestorageindex) public view returns(uint256){
+//         return listofsmartcontract[_simplestorageindex].retrieve();
+//     }
+// }
+
