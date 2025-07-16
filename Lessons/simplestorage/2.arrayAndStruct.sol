@@ -4,7 +4,9 @@ pragma solidity ^0.8.19;
 
 contract simpleStorage{
 
-    uint256[] listofFavoriteNumber;                     //this is an array of uint256
+    uint256[] listofFavoriteNumber;                     //this is an array of uint256 with no data in it
+    uint256[] public listofFavoriteNumber2 = [1,2,3];   //this is an array with the data uint ,indexing starts at 0,1,2...
+    
 
 
     //we can create our own datatypes that groups multiple variables in solidity using the "struct"
@@ -14,7 +16,7 @@ contract simpleStorage{
         uint256 favoriteNumber;
         string name;
     }
-
+    // person public pat = (7,"pat");
     // person public pat = person({favoriteNumber:7, name : "pat"});
     // person public alex = person({favoriteNumber:8, name:"alex"});
 
