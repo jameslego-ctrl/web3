@@ -2,15 +2,17 @@
 
 pragma solidity ^0.8.18;
 
-import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
+import {priceConverter} from "./5priceConverter.sol";
 
 contract FundMe {
+    using priceConverter for uint256;
+
     address[] public funders;
     uint256 public minimumUsd = 5e18;
     mapping(address funders => uint256 amountFunded) public addressToAmountFunded;
 
     function fund() public payable{
-        require(getConversionRate(msg.value) >= minimumUsd,"didn't send enough ETH" );
+        require(msg.value.getConversionRate() >= minimumUsd,"didn't send enough ETH" );
         funders.push(msg.sender);
         addressToAmountFunded[msg.sender] = addressToAmountFunded[msg.sender] + msg.value;
 
@@ -18,21 +20,6 @@ contract FundMe {
 
     //function withdraw() public {}
 
-    function getprice() public view returns(uint256){
-        AggregatorV3Interface priceFeed = AggregatorV3Interface(0x694AA1769357215DE4FAC081bf1f309aDC325306);
-        (,int price,,,) = priceFeed.latestRoundData();
-        return uint256(price * 1e10);
-    }
-
-    function getConversionRate(uint256 ethAmount) public view returns(uint256){
-        uint256 ethPrice = getprice();
-        uint256 ethAmountInUsd = ethPrice * ethAmount;
-        return ethAmountInUsd;
-    }
-
-    function getversion() public view returns(uint256){
-        return AggregatorV3Interface(0x694AA1769357215DE4FAC081bf1f309aDC325306).version();
-    }
 
 }
 
